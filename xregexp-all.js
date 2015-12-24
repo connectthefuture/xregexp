@@ -170,7 +170,7 @@ module.exports = function(XRegExp) {
         return XRegExp(pattern, flags);
     };
 
-}
+};
 
 },{}],2:[function(require,module,exports){
 /*!
@@ -363,7 +363,7 @@ module.exports = function(XRegExp) {
         return output;
     };
 
-}
+};
 
 },{}],3:[function(require,module,exports){
 /*!
@@ -601,7 +601,7 @@ module.exports = function(XRegExp) {
         XRegExp.cache.flush('patterns');
     };
 
-}
+};
 
 },{}],4:[function(require,module,exports){
 /*!
@@ -1677,7 +1677,7 @@ module.exports = function(XRegExp) {
         }
     ]);
 
-}
+};
 
 },{}],5:[function(require,module,exports){
 /*!
@@ -1914,7 +1914,7 @@ module.exports = function(XRegExp) {
         }
     ]);
 
-}
+};
 
 },{}],6:[function(require,module,exports){
 /*!
@@ -2021,7 +2021,7 @@ module.exports = function(XRegExp) {
 
     XRegExp.addUnicodeData(unicodeData);
 
-}
+};
 
 },{}],7:[function(require,module,exports){
 /*!
@@ -2582,10 +2582,28 @@ module.exports = function(XRegExp) {
         }
     ]);
 
-}
+};
 
 },{}],8:[function(require,module,exports){
+/**
+ * angular-xregexp 0.0.1
+ * This is an angular cap of XRegExp.
+ * pax (coolwinding@gmail.com) (c) 2015-2016 MIT License
+ */
+
+module.exports = function(angular, XRegExp) {
+	'use strict';
+
+	angular.module('xregexp', [])
+	.factory('xregexp', [function() {
+		return XRegExp;
+	}]);
+};
+
+
+},{}],9:[function(require,module,exports){
 var XRegExp = require('./xregexp');
+//var angular = require('../bower_components/angular');
 
 require('./addons/build')(XRegExp);
 require('./addons/matchrecursive')(XRegExp);
@@ -2594,10 +2612,11 @@ require('./addons/unicode-blocks')(XRegExp);
 require('./addons/unicode-categories')(XRegExp);
 require('./addons/unicode-properties')(XRegExp);
 require('./addons/unicode-scripts')(XRegExp);
+require('./angular-xregexp')(angular, XRegExp);
 
 module.exports = XRegExp;
 
-},{"./addons/build":1,"./addons/matchrecursive":2,"./addons/unicode-base":3,"./addons/unicode-blocks":4,"./addons/unicode-categories":5,"./addons/unicode-properties":6,"./addons/unicode-scripts":7,"./xregexp":9}],9:[function(require,module,exports){
+},{"./addons/build":1,"./addons/matchrecursive":2,"./addons/unicode-base":3,"./addons/unicode-blocks":4,"./addons/unicode-categories":5,"./addons/unicode-properties":6,"./addons/unicode-scripts":7,"./angular-xregexp":8,"./xregexp":10}],10:[function(require,module,exports){
 /*!
  * XRegExp 3.1.0-dev
  * <xregexp.com>
@@ -2654,28 +2673,14 @@ module.exports = XRegExp;
     var replacementToken = /\$(?:{([\w$]+)}|(\d\d?|[\s\S]))/g;
     // Check for correct `exec` handling of nonparticipating capturing groups
     var correctExecNpcg = nativ.exec.call(/()??/, '')[1] === undefined;
+    // Dummy regular expression for testing purposes
+    var dummyRegExp = /x/;
     // Check for ES6 `u` flag support
-    var hasNativeU = (function() {
-        var isSupported = true;
-        try {
-            new RegExp('', 'u');
-        } catch (exception) {
-            isSupported = false;
-        }
-        return isSupported;
-    }());
+    var hasNativeU = 'unicode' in dummyRegExp;
     // Check for ES6 `y` flag support
-    var hasNativeY = (function() {
-        var isSupported = true;
-        try {
-            new RegExp('', 'y');
-        } catch (exception) {
-            isSupported = false;
-        }
-        return isSupported;
-    }());
+    var hasNativeY = 'sticky' in dummyRegExp;
     // Check for ES6 `flags` prop support
-    var hasFlagsProp = /a/.flags !== undefined;
+    var hasFlagsProp = dummyRegExp.flags !== undefined;
     // Tracker for known flags, including addon flags
     var registeredFlags = {
         g: true,
@@ -4476,5 +4481,5 @@ module.exports = XRegExp;
 
     module.exports = XRegExp;
 
-},{}]},{},[8])(8)
+},{}]},{},[9])(9)
 });
